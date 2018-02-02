@@ -24,12 +24,11 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation "com.android.support:appcompat-v7:$supportLibVersion"
     implementation "com.android.support:recyclerview-v7:$supportLibVersion"
-    implementation 'com.firebaseui:firebase-ui-database:0.5.3'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation ('com.google.firebase:firebase-database:11.8.0') {
-        exclude group: 'com.android.support', module: 'appcompat-v7'
+    implementation 'com.firebaseui:firebase-ui-database:0.5.3'
+    implementation('com.google.firebase:firebase-database:11.8.0') {
+        exclude group: 'com.android.support'
     }
 }
-
 
 apply plugin: 'com.google.gms.google-services'

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.handler.mobile.smartdoorbell">
 
+    <uses-permission android:name="android.permission.CAMERA"/>
+
     <application>
         <uses-library android:name="com.google.android.things"/>
 

@@ -1,11 +1,15 @@
 package de.handler.mobile.smartdoorbell
 
 import android.app.Activity
+import android.content.pm.PackageManager
 import android.media.ImageReader
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.util.Base64
+import com.google.firebase.FirebaseApp
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -45,6 +49,7 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        FirebaseApp.initializeApp(this.applicationContext)
         database = FirebaseDatabase.getInstance()
 
         cameraThread = HandlerThread(cameraThreadString)
@@ -55,6 +60,33 @@ class MainActivity : Activity() {
         cloudThread.start()
         cloudHandler = Handler(cloudThread.looper)
 
+        checkPermissionAndOpenCam()
+    }
+
+    private fun checkPermissionAndOpenCam() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CAMERA), 1)
+        } else {
+            openCamera()
+        }
+
+        doorbell_button.setOnClickListener({
+            DoorbellCamera.takePicture()
+        })
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>?, grantResults: IntArray?) {
+        if (requestCode == 1
+                && grantResults != null
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            openCamera()
+        } else {
+            checkPermissionAndOpenCam()
+        }
+    }
+
+    private fun openCamera() {
         DoorbellCamera.initializeCam(this, cameraHandler, ImageReader.OnImageAvailableListener {
             val image = it.acquireLatestImage()
             // get image bytes
@@ -64,8 +96,6 @@ class MainActivity : Activity() {
             image.close()
             onPictureTaken(imageBytes)
         })
-
-        doorbell_button.setOnClickListener({ DoorbellCamera.takePicture() })
     }
 
     private fun onPictureTaken(imageBytes: ByteArray) {

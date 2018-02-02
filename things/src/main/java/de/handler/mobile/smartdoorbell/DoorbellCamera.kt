@@ -1,6 +1,5 @@
 package de.handler.mobile.smartdoorbell
 
-import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Context.CAMERA_SERVICE
@@ -19,7 +18,6 @@ object DoorbellCamera {
     private var captureSession: CameraCaptureSession? = null
     private var imageReader: ImageReader? = null
 
-    @SuppressLint("MissingPermission")
     fun initializeCam(context: Context,
                       backgroundHandler: Handler,
                       imageAvailableListener: ImageReader.OnImageAvailableListener) {
