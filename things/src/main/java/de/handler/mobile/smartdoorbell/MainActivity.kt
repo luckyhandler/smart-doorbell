@@ -2,6 +2,8 @@ package de.handler.mobile.smartdoorbell
 
 import android.app.Activity
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.media.ImageReader
 import android.os.Bundle
 import android.os.Handler
@@ -101,6 +103,33 @@ class MainActivity : Activity() {
     private fun onPictureTaken(imageBytes: ByteArray) {
         val log = database.getReference("logs").push()
         val imageStr = Base64.encodeToString(imageBytes, Base64.NO_WRAP or Base64.URL_SAFE)
+
+        setImageToPreview(imageStr)
+
         log.child("image").setValue(imageStr)
+    }
+
+    private fun setImageToPreview(encodedImage: String) {
+        object : Thread() {
+            override fun run() {
+                try {
+                    runOnUiThread {
+                        val imageByteArray = Base64.decode(encodedImage, Base64.NO_WRAP or Base64.URL_SAFE)
+                        val image: Bitmap? = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray.size)
+                        preview_image_view.setImageBitmap(image)
+
+                        val handler = Handler()
+                        handler.postDelayed(object : Runnable {
+                            override fun run() {
+                                //Do something after 5000ms
+                                preview_image_view.setImageResource(R.drawable.ic_avatar)
+                            }
+                        }, 5000)
+                    }
+                } catch (e: InterruptedException) {
+                    e.printStackTrace()
+                }
+            }
+        }.start()
     }
 }

@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
-import android.text.format.DateUtils
+import android.text.format.DateUtils.*
 import android.util.Base64
 import android.view.View
 import android.widget.ImageView
@@ -39,11 +39,11 @@ class DoorbellItemAdapter(ref: DatabaseReference) :
             itemImage.setImageBitmap(image)
 
             // Set time
-            timeTextView.text = DateUtils.getRelativeDateTimeString(
+            timeTextView.text = getRelativeDateTimeString(
                     itemView.context,
                     item.timestamp!!,
-                    DateUtils.SECOND_IN_MILLIS,
-                    DateUtils.WEEK_IN_MILLIS,
+                    SECOND_IN_MILLIS,
+                    WEEK_IN_MILLIS,
                     0)
 
             metaDataTextView.text = item.annotations?.keys?.joinToString { it }

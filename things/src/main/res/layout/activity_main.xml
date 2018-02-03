@@ -1,18 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="horizontal"
     tools:context="de.handler.mobile.smartdoorbell.MainActivity">
 
     <ImageButton
         android:id="@+id/doorbell_button"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="300dp"
         android:layout_gravity="center"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_weight="1"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
-        android:src="@drawable/selector_doorbell"/>
+        android:src="@drawable/selector_doorbell" />
 
-</FrameLayout>
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/preview_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_avatar" />
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -22,7 +22,8 @@ class MainActivity : AppCompatActivity() {
 
         doorbellItemAdapter = DoorbellItemAdapter(databaseReference)
         doorbellItemAdapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-            override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                super.onItemRangeInserted(positionStart, itemCount)
                 recyclerView.smoothScrollToPosition(doorbellItemAdapter!!.itemCount)
             }
         })
