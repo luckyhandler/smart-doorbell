@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat
 import android.util.Base64
 import com.google.firebase.FirebaseApp
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ServerValue
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -77,6 +78,14 @@ class MainActivity : Activity() {
         })
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        DoorbellCamera.shutDown()
+
+        cameraThread.quitSafely()
+        cloudThread.quitSafely()
+    }
+
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>?, grantResults: IntArray?) {
         if (requestCode == 1
@@ -107,6 +116,7 @@ class MainActivity : Activity() {
         setImageToPreview(imageStr)
 
         log.child("image").setValue(imageStr)
+        log.child("timestamp").setValue(ServerValue.TIMESTAMP)
     }
 
     private fun setImageToPreview(encodedImage: String) {
