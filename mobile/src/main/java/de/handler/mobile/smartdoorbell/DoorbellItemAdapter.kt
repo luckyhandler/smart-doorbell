@@ -25,9 +25,9 @@ class DoorbellItemAdapter(ref: DatabaseReference) :
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var itemImage: ImageView = itemView.findViewById(R.id.item_image)
-        var timeTextView: TextView = itemView.findViewById(R.id.item_time_text_view)
-        var metaDataTextView: TextView = itemView.findViewById(R.id.item_metadata_text_view)
+        private var itemImage: ImageView = itemView.findViewById(R.id.item_image)
+        private var timeTextView: TextView = itemView.findViewById(R.id.item_time_text_view)
+        private var metaDataTextView: TextView = itemView.findViewById(R.id.item_metadata_text_view)
 
         fun bind(item: DoorbellItem) {
             // Set bitmap
